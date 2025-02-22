@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLP App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url('https://cdn.dribbble.com/users/3457/screenshots/2006659/animated-svg.gif') no-repeat center center fixed;
+            background-size: cover;
+            color: rgb(15, 14, 14);
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            background: rgba(31, 31, 31, 0.9); /* Semi-transparent black background */
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ff9f00;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #e0e0e0;
+        }
+
+        .form-control {
+            background: #333333;
+            color: white;
+            border-radius: 10px;
+            border: 1px solid #444444;
+        }
+
+        .form-control:focus {
+            background: #555555;
+            border-color: #ff9f00;
+            box-shadow: 0 0 5px #ff9f00;
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: #ff9f00;
+            border-color: #ff9f00;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background-color: #ffa700;
+            border-color: #ffa700;
+        }
+
+        .result-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #333333;
+            border-radius: 10px;
+        }
+
+        .result-section h2 {
+            font-size: 1.8rem;
+            color: #ff9f00;
+        }
+
+        .result-section p {
+            font-size: 1.1rem;
+            color: #dcdcdc;
+        }
+
+        .mt-4 {
+            margin-top: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+        option{color: white;}
+
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>NLP: Tasks Using Pipeline</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="user_input">Enter text:</label>
+                <textarea class="form-control" id="user_input" name="user_input" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="task">Choose a task:</label>
+                <select class="form-control" id="task" name="task">
+                    <option value="sentiment">Sentiment Analysis</option>
+                    <option value="generation">Text Generation</option>
+                    <option value="translation">Translation</option>
+                    <option value="summarization">Summarization</option>
+                    <option value="named_entity_recognition">Named Entity Recognition</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+
+        {% if sent %}
+        <div class="result-section mt-4">
+            <h2>Sentiment analysis:</h2>
+            <p>{{ sent[0].label }}, Score: {{ sent[0].score }}</p>
+        </div>
+        {% endif %}
+
+        {% if gen %}
+        <div class="result-section mt-4">
+            <h2>Generated Text:</h2>
+            <p>{{ gen[0].generated_text }}</p>
+        </div>
+        {% endif %}
+
+        {% if ner %}
+        <div class="result-section mt-4">
+            <h2>Named Entity Recognition (NER):</h2>
+            <p>Group entity: {{ ner[0].entity_group }}, Score: {{ ner[0].score }}, Word: {{ ner[0].word }}</p>
+        </div>
+        {% endif %}
+
+        {% if trans %}
+        <div class="result-section mt-4">
+            <h2>Translation:</h2>
+            <p>{{ trans[0].translation_text }}</p>
+        </div>
+        {% endif %}
+
+        {% if summ %}
+        <div class="result-section mt-4">
+            <h2>Summarization:</h2>
+            <p>{{ summ[0].summary_text }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
